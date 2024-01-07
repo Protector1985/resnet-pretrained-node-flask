@@ -1,5 +1,6 @@
 from flask import Flask, request
 from dotenv import load_dotenv
+from flask_cors import CORS
 import os
 
 #get the dotenv. path since it's one folder structure up.
@@ -12,12 +13,13 @@ load_dotenv(dotenv_path)
 port = os.getenv("FLASK_PORT")
 print(port)
 app = Flask(__name__)
+CORS(app, resources={r"*": {"origins": "*"}})
 
 @app.route("/data", methods=["POST"])
 def processor():
     if request.method == "POST":
         data = request.json
-        print(data)
+        print("DATA RCEIVED!!!!!!!!!!!!!!")
         return "OK"
     else:
         return "Can't process GET"
