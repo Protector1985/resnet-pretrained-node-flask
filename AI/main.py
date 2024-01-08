@@ -2,6 +2,10 @@ from flask import Flask, request
 from dotenv import load_dotenv
 from flask_cors import CORS
 import os
+from torchvision import models
+from lib.Resnet import Resnet
+
+resnet = Resnet()
 
 #get the dotenv. path since it's one folder structure up.
 dotenv_path = os.path.join(os.path.dirname(__file__),"..", ".env")
@@ -21,7 +25,8 @@ CORS(app, resources={r"*": {"origins": "*"}})
 def processor():
     if request.method == "POST":
         file = request.files['file']
-        print(file)
+        resnet.resnet_processor(file)
+        
         return "OK"
     else:
         return "Can't process GET"
