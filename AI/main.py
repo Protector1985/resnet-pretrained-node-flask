@@ -11,15 +11,17 @@ load_dotenv(dotenv_path)
 
 #get the environment variable for the flask port.
 port = os.getenv("FLASK_PORT")
-print(port)
+
 app = Flask(__name__)
+
+#allow all origins for simplicity
 CORS(app, resources={r"*": {"origins": "*"}})
 
 @app.route("/data", methods=["POST"])
 def processor():
     if request.method == "POST":
-        data = request.json
-        print("DATA RCEIVED!!!!!!!!!!!!!!")
+        file = request.files['file']
+        print(file)
         return "OK"
     else:
         return "Can't process GET"
